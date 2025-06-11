@@ -1,0 +1,5 @@
+udm_credentials <- function(UDM_API_USERNAME, UDM_API_PASSWORD){
+
+  Sys.setenv("UDM_API_USERNAME" = UDM_API_USERNAME, "UDM_API_PASSWORD" = UDM_API_PASSWORD)
+
+}
