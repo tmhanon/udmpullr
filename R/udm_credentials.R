@@ -18,12 +18,14 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Set your UDM credentials
 #' udm_credentials("<your UDM email/username>", "<your UDM password")
 #'
 #' # Retrieve UDM credentials
 #' Sys.getenv("UDM_API_USERNAME")
 #' Sys.getenv("UDM_API_PASSWORD")
+#' }
 udm_credentials <- function(UDM_API_USERNAME, UDM_API_PASSWORD){
 
   Sys.setenv("UDM_API_USERNAME" = UDM_API_USERNAME,

@@ -30,5 +30,7 @@ A tibble
 Use this function to pull tables from the 'UDM' API.
 }
 \examples{
-udmpullr("UDM_Report_CME_Dairy_Spot_Market_Overview_Daily")
+\dontrun{
+udmpullr(table_name = "UDM_Report_CME_Dairy_Spot_Market_Overview_Daily")
+}
 }

@@ -12,7 +12,9 @@
 #' @export
 #'
 #' @examples
-#' udmpullr("UDM_Report_CME_Dairy_Spot_Market_Overview_Daily")
+#' \dontrun{
+#' udmpullr(table_name = "UDM_Report_CME_Dairy_Spot_Market_Overview_Daily")
+#' }
 udmpullr <- function(table_name,
                      product_name = NULL,
                      start_date = NULL,
