@@ -1,3 +1,18 @@
+#' Pull tables from 'UDM' API
+#'
+#' Use this function to pull tables from the 'UDM' API.
+#'
+#' @param table_name Name of the table you want to pull
+#' @param product_name Name of a specific product to filter for (if Product_Name is a variable in the table)
+#' @param start_date Earliest date to include in the dataset
+#' @param end_date Latest date to include in the dataset
+#' @param company_feed Your company feed for 'UDM' (if applicable). Default is "Universal"
+#'
+#' @return A tibble
+#' @export
+#'
+#' @examples
+#' udmpullr("UDM_Report_CME_Dairy_Spot_Market_Overview_Daily")
 udmpullr <- function(table_name,
                      product_name = NULL,
                      start_date = NULL,
@@ -16,41 +31,41 @@ udmpullr <- function(table_name,
     if (!is.null(product_name)) {
       # If a start date is given but the end date is null:
       if (!is.null(start_date) & is.null(end_date)) {
-        adjusted_start_date <- ymd(start_date) - days(x = 1)
-
-        reformat_start_date <- format(as.Date(adjusted_start_date), "%Y-%m-%dT%H:%M:%OSZ")
+        reformat_start_date <- start_date %>%
+          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
                         "$format=json&$filter=",
                         "Product_Name eq '", product_name, "'",
-                        " and Report_Period gt ", reformat_start_date)
+                        " and Report_Period ge ", reformat_start_date)
 
         # If both a start date and an end date are given:
       } else if (!is.null(start_date) & !is.null(end_date)) {
-        adjusted_start_date <- ymd(start_date) - days(x = 1)
+        reformat_start_date <- start_date %>%
+          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          format("%Y-%m-%dT%H:%M:%OSZ")
 
-        reformat_start_date <- format(as.Date(adjusted_start_date), "%Y-%m-%dT%H:%M:%OSZ")
-
-        adjusted_end_date <- ymd(end_date) + days(x = 1)
-
-        reformat_end_date <- format(as.Date(adjusted_end_date), "%Y-%m-%dT%H:%M:%OSZ")
+        reformat_end_date <- end_date %>%
+          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
                         "$format=json&$filter=",
                         "Product_Name eq '", product_name, "'",
-                        " and Report_Period gt ", reformat_start_date,
-                        " and Report_Period lt ", reformat_end_date)
+                        " and Report_Period ge ", reformat_start_date,
+                        " and Report_Period le ", reformat_end_date)
 
         # If an end date is given but the start date is null:
       } else if (is.null(start_date) & ! is.null(end_date)) {
-        adjusted_end_date <- ymd(end_date) + days(x = 1)
-
-        reformat_end_date <- format(as.Date(adjusted_end_date), "%Y-%m-%dT%H:%M:%OSZ")
+        reformat_end_date <- end_date %>%
+          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
                         "$format=json&$filter=",
                         "Product_Name eq '", product_name, "'",
-                        " and Report_Period lt ", reformat_end_date)
+                        " and Report_Period le ", reformat_end_date)
         # If neither a start date or an end date is given:
       } else {
         query <- paste0(basic_query,
@@ -61,48 +76,70 @@ udmpullr <- function(table_name,
     } else {
       # If a start date is given but the end date is null:
       if (!is.null(start_date) & is.null(end_date)) {
-        adjusted_start_date <- ymd(start_date) - days(x = 1)
-
-        reformat_start_date <- format(as.Date(adjusted_start_date), "%Y-%m-%dT%H:%M:%OSZ")
+        reformat_start_date <- start_date %>%
+          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
                         "$format=json&$filter=",
-                        "Report_Period gt ", reformat_start_date)
+                        "Report_Period ge ", reformat_start_date)
 
         # If both a start date and an end date are given:
       } else if (!is.null(start_date) & !is.null(end_date)) {
-        adjusted_start_date <- ymd(start_date) - days(x = 1)
+        reformat_start_date <- start_date %>%
+          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          format("%Y-%m-%dT%H:%M:%OSZ")
 
-        reformat_start_date <- format(as.Date(adjusted_start_date), "%Y-%m-%dT%H:%M:%OSZ")
-
-        adjusted_end_date <- ymd(end_date) + days(x = 1)
-
-        reformat_end_date <- format(as.Date(adjusted_end_date), "%Y-%m-%dT%H:%M:%OSZ")
+        reformat_end_date <- end_date %>%
+          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
                         "$format=json&$filter=",
-                        "Report_Period gt ", reformat_start_date,
-                        " and Report_Period lt ", reformat_end_date)
+                        "Report_Period ge ", reformat_start_date,
+                        " and Report_Period le ", reformat_end_date)
 
         # If an end date is given but the start date is null:
       } else {
-        adjusted_end_date <- ymd(end_date) + days(x = 1)
-
-        reformat_end_date <- format(as.Date(adjusted_end_date), "%Y-%m-%dT%H:%M:%OSZ")
+        reformat_end_date <- end_date %>%
+          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
                         "$format=json&$filter=",
-                        "Report_Period lt ", reformat_end_date)
+                        "Report_Period le ", reformat_end_date)
       }
     }
 
   }
 
-  url <- GET(URLencode(query),
-             authenticate(user = Sys.getenv("UDM_API_USERNAME"),Sys.getenv("UDM_API_PASSWORD")))
+  # Check that UDM Credentials are set:
+  if(identical(Sys.getenv("UDM_API_USERNAME"), "")) {
+    stop("UDM username not yet specified. Use udm_credentials() function to set your username.",
+         call. = FALSE)
+  }
 
-  content <- fromJSON(content(url, "text", encoding = "UTF-8"))
+  if(identical(Sys.getenv("UDM_API_PASSWORD"), "")) {
+    stop("UDM password not yet specified. Use udm_credentials() function to set your password.",
+         call. = FALSE)
+  }
 
-  data <- content$value
+  # Construct request
+  req <- utils::URLencode(query) %>%
+    httr2::request() %>%
+    httr2::req_auth_basic(username = Sys.getenv("UDM_API_USERNAME"),
+                          password = Sys.getenv("UDM_API_PASSWORD"))
+
+  # Execute request
+  resp <- req %>%
+    httr2::req_perform()
+
+  # Convert response to user-friendly data
+  data <- resp %>%
+    httr2::resp_body_json() %>%
+    purrr::pluck("value") %>%
+    dplyr::bind_rows()
+
+  data
 
 }
