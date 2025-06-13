@@ -7,6 +7,8 @@
 #' @param start_date Earliest date to include in the dataset
 #' @param end_date Latest date to include in the dataset
 #' @param company_feed Your company feed for 'UDM' (if applicable). Default is "Universal"
+#' @param UDM_username Your email address registered with UDM (will be retrieved by [get_udm_username()] by default)
+#' @param UDM_password Your UDM password (will be retrieved by [get_udm_password()] by default)
 #'
 #' @return A tibble
 #' @export
@@ -19,7 +21,9 @@ udmpullr <- function(table_name,
                      product_name = NULL,
                      start_date = NULL,
                      end_date = NULL,
-                     company_feed = "Universal") {
+                     company_feed = "Universal",
+                     UDM_username = get_udm_username(),
+                     UDM_password = get_udm_password()) {
 
   basic_query <- paste0("https://data.commoditymarkets.com/", company_feed, "/", table_name, "?")
 
@@ -115,22 +119,11 @@ udmpullr <- function(table_name,
 
   }
 
-  # Check that UDM Credentials are set:
-  if(identical(Sys.getenv("UDM_API_USERNAME"), "")) {
-    stop("UDM username not yet specified. Use udm_credentials() function to set your username.",
-         call. = FALSE)
-  }
-
-  if(identical(Sys.getenv("UDM_API_PASSWORD"), "")) {
-    stop("UDM password not yet specified. Use udm_credentials() function to set your password.",
-         call. = FALSE)
-  }
-
   # Construct request
   req <- utils::URLencode(query) %>%
     httr2::request() %>%
-    httr2::req_auth_basic(username = Sys.getenv("UDM_API_USERNAME"),
-                          password = Sys.getenv("UDM_API_PASSWORD"))
+    httr2::req_auth_basic(username = UDM_username,
+                          password = UDM_password)
 
   # Execute request
   resp <- req %>%

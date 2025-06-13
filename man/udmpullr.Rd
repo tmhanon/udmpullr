@@ -9,7 +9,9 @@ udmpullr(
   product_name = NULL,
   start_date = NULL,
   end_date = NULL,
-  company_feed = "Universal"
+  company_feed = "Universal",
+  UDM_username = get_udm_username(),
+  UDM_password = get_udm_password()
 )
 }
 \arguments{
@@ -22,6 +24,10 @@ udmpullr(
 \item{end_date}{Latest date to include in the dataset}
 
 \item{company_feed}{Your company feed for 'UDM' (if applicable). Default is "Universal"}
+
+\item{UDM_username}{Your email address registered with UDM (will be retrieved by \code{\link[=get_udm_username]{get_udm_username()}} by default)}
+
+\item{UDM_password}{Your UDM password (will be retrieved by \code{\link[=get_udm_password]{get_udm_password()}} by default)}
 }
 \value{
 A tibble
