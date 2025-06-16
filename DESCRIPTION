@@ -15,6 +15,7 @@ Imports:
     askpass,
     dplyr,
     httr2,
+    lifecycle,
     lubridate,
     magrittr,
     purrr

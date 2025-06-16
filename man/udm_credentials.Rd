@@ -21,7 +21,7 @@ get_udm_password()
 \description{
 Set your 'UDM' API username and password and retrieve them for use in API pulls.
 In order to access the 'UDM' API you must have an account registered with 'UDM'.
-Visit https://commoditymarkets.com/ for more information.
+Visit \url{https://commoditymarkets.com/} for more information.
 }
 \details{
 The \code{set_udm_credentials()} function provides one option for telling R your 'UDM' credentials

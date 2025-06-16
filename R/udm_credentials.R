@@ -2,7 +2,7 @@
 #'
 #' Set your 'UDM' API username and password and retrieve them for use in API pulls.
 #' In order to access the 'UDM' API you must have an account registered with 'UDM'.
-#' Visit https://commoditymarkets.com/ for more information.
+#' Visit <https://commoditymarkets.com/> for more information.
 #'
 #' The `set_udm_credentials()` function provides one option for telling R your 'UDM' credentials
 #' to use within the current session. Executing the `set_udm_credentials()` function without
