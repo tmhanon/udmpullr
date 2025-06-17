@@ -133,6 +133,7 @@ udmpullr <- function(table_name,
   data <- resp %>%
     httr2::resp_body_json() %>%
     purrr::pluck("value") %>%
+    purrr::map(~ purrr::modify_if(.x, is.null, ~ NA)) %>%
     dplyr::bind_rows()
 
   data
