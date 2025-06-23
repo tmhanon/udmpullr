@@ -122,6 +122,7 @@ udmpullr <- function(table_name,
   # Construct request
   req <- utils::URLencode(query) %>%
     httr2::request() %>%
+    httr2::req_user_agent("udmpullr (https://github.com/tmhanon/udmpullr)") %>%
     httr2::req_auth_basic(username = UDM_username,
                           password = UDM_password)
 
