@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# udmpullr
+# udmpullr <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 <!-- badges: start -->
 
@@ -84,7 +84,7 @@ passed to `udmpullr()` as the first argument, `table_name`:
 
 ``` r
 udmpullr(table_name = "UDM_Report_CME_Dairy_Spot_Market_Overview_Daily")
-#> # A tibble: 6,694 × 42
+#> # A tibble: 6,698 × 50
 #>    Report_Period        LastModified            Active CME_Nonfat_Dry_Milk_Gra…¹
 #>    <chr>                <chr>                   <lgl>                      <dbl>
 #>  1 1998-09-01T00:00:00Z 2019-03-05T21:06:46.54Z TRUE                        1.1 
@@ -97,13 +97,13 @@ udmpullr(table_name = "UDM_Report_CME_Dairy_Spot_Market_Overview_Daily")
 #>  8 1998-09-17T00:00:00Z 2019-03-05T21:06:46.54Z TRUE                        1.16
 #>  9 1998-09-18T00:00:00Z 2019-03-05T21:06:46.54Z TRUE                        1.16
 #> 10 1998-09-21T00:00:00Z 2019-03-05T21:06:46.54Z TRUE                        1.16
-#> # ℹ 6,684 more rows
+#> # ℹ 6,688 more rows
 #> # ℹ abbreviated name: ¹​CME_Nonfat_Dry_Milk_Grade_A_Spot_Price
-#> # ℹ 38 more variables: UDM_CME_Nonfat_Dry_Milk_Grade_A_Spot_Quantity <int>,
+#> # ℹ 46 more variables: UDM_CME_Nonfat_Dry_Milk_Grade_A_Spot_Quantity <int>,
 #> #   UDM_CME_Nonfat_Dry_Milk_Grade_A_Spot_Transaction_Count <int>,
-#> #   CME_Cheese_40_Lbs_Blocks_Spot_Price <dbl>,
-#> #   UDM_CME_Cheese_40_Lbs_Blocks_Spot_Quantity <int>,
-#> #   UDM_CME_Cheese_40_Lbs_Blocks_Spot_Transaction_Count <int>, …
+#> #   CME_Butter_Grade_AA_Spot_Price <dbl>,
+#> #   UDM_CME_Butter_Grade_AA_Spot_Quantity <int>,
+#> #   UDM_CME_Butter_Grade_AA_Spot_Transaction_Count <int>, …
 ```
 
 As shown, `udmpullr()` will return the entire table, with data back to
@@ -118,22 +118,21 @@ data for the last two weeks (note that using `Sys.Date()` as the
 udmpullr(table_name = "UDM_Report_CME_Dairy_Spot_Market_Overview_Daily",
          start_date = Sys.Date() - lubridate::days(14),
          end_date = Sys.Date())
-#> # A tibble: 11 × 40
+#> # A tibble: 10 × 50
 #>    Report_Period        LastModified             Active CME_Nonfat_Dry_Milk_Gr…¹
 #>    <chr>                <chr>                    <lgl>                     <dbl>
-#>  1 2025-06-02T00:00:00Z 2025-06-02T11:46:09.303Z TRUE                       1.29
-#>  2 2025-06-03T00:00:00Z 2025-06-03T11:46:09.14Z  TRUE                       1.28
-#>  3 2025-06-04T00:00:00Z 2025-06-04T11:46:16.03Z  TRUE                       1.27
-#>  4 2025-06-05T00:00:00Z 2025-06-05T11:46:08.133Z TRUE                       1.26
-#>  5 2025-06-06T00:00:00Z 2025-06-06T11:46:12.66Z  TRUE                       1.26
-#>  6 2025-06-09T00:00:00Z 2025-06-09T11:46:10.573Z TRUE                       1.26
-#>  7 2025-06-10T00:00:00Z 2025-06-10T11:46:07.82Z  TRUE                       1.26
-#>  8 2025-06-11T00:00:00Z 2025-06-11T11:46:07.813Z TRUE                       1.26
-#>  9 2025-06-12T00:00:00Z 2025-06-12T11:46:07.717Z TRUE                       1.26
-#> 10 2025-06-13T00:00:00Z 2025-06-13T11:46:09.49Z  TRUE                       1.27
-#> 11 2025-06-16T00:00:00Z 2025-06-16T11:46:13.15Z  TRUE                       1.27
+#>  1 2025-06-09T00:00:00Z 2025-06-09T11:46:10.573Z TRUE                       1.26
+#>  2 2025-06-10T00:00:00Z 2025-06-10T11:46:07.82Z  TRUE                       1.26
+#>  3 2025-06-11T00:00:00Z 2025-06-11T11:46:07.813Z TRUE                       1.26
+#>  4 2025-06-12T00:00:00Z 2025-06-12T11:46:07.717Z TRUE                       1.26
+#>  5 2025-06-13T00:00:00Z 2025-06-13T11:46:09.49Z  TRUE                       1.27
+#>  6 2025-06-16T00:00:00Z 2025-06-16T11:46:13.15Z  TRUE                       1.27
+#>  7 2025-06-17T00:00:00Z 2025-06-17T11:46:08.14Z  TRUE                       1.26
+#>  8 2025-06-18T00:00:00Z 2025-06-18T11:46:09.497Z TRUE                       1.28
+#>  9 2025-06-20T00:00:00Z 2025-06-20T11:46:14.287Z TRUE                       1.26
+#> 10 2025-06-23T00:00:00Z 2025-06-23T11:46:07.55Z  TRUE                       1.26
 #> # ℹ abbreviated name: ¹​CME_Nonfat_Dry_Milk_Grade_A_Spot_Price
-#> # ℹ 36 more variables: UDM_CME_Nonfat_Dry_Milk_Grade_A_Spot_Quantity <int>,
+#> # ℹ 46 more variables: UDM_CME_Nonfat_Dry_Milk_Grade_A_Spot_Quantity <int>,
 #> #   UDM_CME_Nonfat_Dry_Milk_Grade_A_Spot_Transaction_Count <int>,
 #> #   CME_Butter_Grade_AA_Spot_Price <dbl>,
 #> #   UDM_CME_Butter_Grade_AA_Spot_Quantity <int>,
@@ -155,20 +154,20 @@ product to be specified via the `product_name` argument:
 udmpullr("UDM_Report_Futures_Prices_Daily_Panel",
          product_name = "CME Class III Milk Futures",
          start_date = Sys.Date() - lubridate::days(7))
-#> # A tibble: 120 × 12
+#> # A tibble: 115 × 12
 #>    Product_Name  Contract_Month Report_Period Nearby_Index Open_Price High_Price
 #>    <chr>         <chr>          <chr>                <int>      <dbl>      <dbl>
-#>  1 CME Class II… 2026-06-01T00… 2025-06-13T0…           13       18.3       18.3
-#>  2 CME Class II… 2025-06-01T00… 2025-06-13T0…            1       18.8       18.8
-#>  3 CME Class II… 2025-11-01T00… 2025-06-13T0…            6       18.9       18.9
-#>  4 CME Class II… 2026-11-01T00… 2025-06-13T0…           18       18.4       18.4
-#>  5 CME Class II… 2025-09-01T00… 2025-06-13T0…            4       19.2       19.4
-#>  6 CME Class II… 2025-07-01T00… 2025-06-13T0…            2       18.2       18.4
-#>  7 CME Class II… 2025-10-01T00… 2025-06-13T0…            5       19.3       19.3
-#>  8 CME Class II… 2026-08-01T00… 2025-06-13T0…           15       18.4       18.4
-#>  9 CME Class II… 2026-09-01T00… 2025-06-13T0…           16       18.4       18.4
-#> 10 CME Class II… 2025-12-01T00… 2025-06-13T0…            7       18.8       18.8
-#> # ℹ 110 more rows
+#>  1 CME Class II… 2026-06-01T00… 2025-06-20T0…           13       18.2       18.2
+#>  2 CME Class II… 2025-06-01T00… 2025-06-20T0…            1       18.7       18.7
+#>  3 CME Class II… 2025-11-01T00… 2025-06-20T0…            6       18.6       18.6
+#>  4 CME Class II… 2026-11-01T00… 2025-06-20T0…           18       18.4       18.4
+#>  5 CME Class II… 2025-09-01T00… 2025-06-20T0…            4       18.5       18.6
+#>  6 CME Class II… 2025-07-01T00… 2025-06-20T0…            2       17.6       17.7
+#>  7 CME Class II… 2025-10-01T00… 2025-06-20T0…            5       18.7       18.8
+#>  8 CME Class II… 2025-12-01T00… 2025-06-20T0…            7       18.5       18.5
+#>  9 CME Class II… 2026-08-01T00… 2025-06-20T0…           15       18.4       18.4
+#> 10 CME Class II… 2026-05-01T00… 2025-06-20T0…           12       18.1       18.1
+#> # ℹ 105 more rows
 #> # ℹ 6 more variables: Low_Price <dbl>, Close_Price <dbl>, Volume <int>,
 #> #   Open_Interest <int>, LastModified <chr>, Active <int>
 ```
@@ -189,20 +188,20 @@ list("CME Class III Milk Futures",
                            start_date = Sys.Date() - lubridate::days(7),
                            end_date = Sys.Date())) %>%
   dplyr::bind_rows()
-#> # A tibble: 720 × 12
+#> # A tibble: 676 × 12
 #>    Product_Name  Contract_Month Report_Period Nearby_Index Open_Price High_Price
 #>    <chr>         <chr>          <chr>                <int>      <dbl>      <dbl>
-#>  1 CME Class II… 2026-06-01T00… 2025-06-13T0…           13       18.3       18.3
-#>  2 CME Class II… 2025-06-01T00… 2025-06-13T0…            1       18.8       18.8
-#>  3 CME Class II… 2025-11-01T00… 2025-06-13T0…            6       18.9       18.9
-#>  4 CME Class II… 2026-11-01T00… 2025-06-13T0…           18       18.4       18.4
-#>  5 CME Class II… 2025-09-01T00… 2025-06-13T0…            4       19.2       19.4
-#>  6 CME Class II… 2025-07-01T00… 2025-06-13T0…            2       18.2       18.4
-#>  7 CME Class II… 2025-10-01T00… 2025-06-13T0…            5       19.3       19.3
-#>  8 CME Class II… 2026-08-01T00… 2025-06-13T0…           15       18.4       18.4
-#>  9 CME Class II… 2026-09-01T00… 2025-06-13T0…           16       18.4       18.4
-#> 10 CME Class II… 2025-12-01T00… 2025-06-13T0…            7       18.8       18.8
-#> # ℹ 710 more rows
+#>  1 CME Class II… 2026-06-01T00… 2025-06-20T0…           13       18.2       18.2
+#>  2 CME Class II… 2025-06-01T00… 2025-06-20T0…            1       18.7       18.7
+#>  3 CME Class II… 2025-11-01T00… 2025-06-20T0…            6       18.6       18.6
+#>  4 CME Class II… 2026-11-01T00… 2025-06-20T0…           18       18.4       18.4
+#>  5 CME Class II… 2025-09-01T00… 2025-06-20T0…            4       18.5       18.6
+#>  6 CME Class II… 2025-07-01T00… 2025-06-20T0…            2       17.6       17.7
+#>  7 CME Class II… 2025-10-01T00… 2025-06-20T0…            5       18.7       18.8
+#>  8 CME Class II… 2025-12-01T00… 2025-06-20T0…            7       18.5       18.5
+#>  9 CME Class II… 2026-08-01T00… 2025-06-20T0…           15       18.4       18.4
+#> 10 CME Class II… 2026-05-01T00… 2025-06-20T0…           12       18.1       18.1
+#> # ℹ 666 more rows
 #> # ℹ 6 more variables: Low_Price <dbl>, Close_Price <dbl>, Volume <int>,
 #> #   Open_Interest <int>, LastModified <chr>, Active <int>
 ```
