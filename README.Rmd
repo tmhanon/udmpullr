@@ -84,7 +84,7 @@ udmpullr(table_name = "UDM_Report_CME_Dairy_Spot_Market_Overview_Daily",
          end_date = Sys.Date())
 ```
 
-The UDM API has a limit of 10,000 rows of data in any single response. This is an issue for certain tables, such as the daily futures panel, which have far more than 10,000 rows of data. Therfore, it is necessary to filter the data to some extent before pulling from the UDM API. The `start_date` and `end_date` arguments are one option for doing so, but `udmpullr()` also allows specific products to be specified (for tables where that is applicable). For example, the daily futures panel includes a variable called `Product_Name`, and `udmpullr()` allows a specific product to be specified via the `product_name` argument:
+The UDM API has a limit of 10,000 rows of data in any single response. This is an issue for certain tables, such as the daily futures panel, which have far more than 10,000 rows of data. Therefore, it is necessary to filter the data to some extent before pulling from the UDM API. The `start_date` and `end_date` arguments are one option for doing so, but `udmpullr()` also allows specific products to be specified (for tables where that is applicable). For example, the daily futures panel includes a variable called `Product_Name`, and `udmpullr()` allows a specific product to be specified via the `product_name` argument:
 
 ```{r}
 udmpullr("UDM_Report_Futures_Prices_Daily_Panel",
