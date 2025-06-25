@@ -43,9 +43,9 @@ set_udm_credentials <- function(UDM_API_USERNAME = NULL, UDM_API_PASSWORD = NULL
   # If neither credential is specified, prompt the user to enter them:
   if (is.null(UDM_API_USERNAME) & is.null(UDM_API_USERNAME)) {
     UDM_API_USERNAME <- askpass::askpass("Please enter your UDM API username/email")
-    UDM_API_PASSWORD <- askpass::askpass("Please enter your URM API password")
+    UDM_API_PASSWORD <- askpass::askpass("Please enter your UDM API password")
   } else if (!is.null(UDM_API_USERNAME) & is.null(UDM_API_USERNAME)) {
-    UDM_API_PASSWORD <- askpass::askpass("Please enter your URM API password")
+    UDM_API_PASSWORD <- askpass::askpass("Please enter your UDM API password")
   }
 
   Sys.setenv("UDM_API_USERNAME" = UDM_API_USERNAME,

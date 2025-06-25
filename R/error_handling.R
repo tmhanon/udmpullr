@@ -4,7 +4,7 @@
 #'
 #' @returns A message for use in `httr2::req_error`
 udm_error_body <- function(resp) {
-  type <- httr2::resp_content_type()
+  type <- httr2::resp_content_type(resp)
 
   if (type == "application/json") {
     resp %>%
@@ -13,9 +13,7 @@ udm_error_body <- function(resp) {
       .$message
   } else if(type == "text/html") {
     resp %>%
-      httr2::resp_body_html() %>%
-      .$error %>%
-      .$message
+      httr2::resp_body_string()
   } else {
     NULL
   }
