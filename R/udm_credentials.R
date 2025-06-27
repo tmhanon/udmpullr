@@ -23,8 +23,8 @@
 #' `set_udm_credentials()` function or set in a .Renviron file), but these functions are
 #' primarily used as default arguments in the [udmpullr()] function.
 #'
-#' @param UDM_API_USERNAME Your email address registered with UDM
-#' @param UDM_API_PASSWORD Your UDM password
+#' @param UDM_API_USERNAME A character. Your email address registered with UDM.
+#' @param UDM_API_PASSWORD A character. Your UDM password.
 #'
 #' @export
 #'
@@ -40,16 +40,26 @@
 #' get_udm_password() # Will return an error if not set.
 #' }
 set_udm_credentials <- function(UDM_API_USERNAME = NULL, UDM_API_PASSWORD = NULL){
-  # If neither credential is specified, prompt the user to enter them:
-  if (is.null(UDM_API_USERNAME) & is.null(UDM_API_USERNAME)) {
+
+  # If username is not specified, prompt the user to enter it:
+  if (is.null(UDM_API_USERNAME)) {
     UDM_API_USERNAME <- askpass::askpass("Please enter your UDM API username/email")
-    UDM_API_PASSWORD <- askpass::askpass("Please enter your UDM API password")
-  } else if (!is.null(UDM_API_USERNAME) & is.null(UDM_API_USERNAME)) {
-    UDM_API_PASSWORD <- askpass::askpass("Please enter your UDM API password")
+  } else if (is.character(UDM_API_USERNAME)) {
+    Sys.setenv("UDM_API_USERNAME" = UDM_API_USERNAME)
+  } else {
+    cli::cli_abort(c("{.arg UDM_API_USERNAME} must be a character vector.",
+                     "x" = "You've supplied a {.cls {class(UDM_API_USERNAME)}} vector."))
   }
 
-  Sys.setenv("UDM_API_USERNAME" = UDM_API_USERNAME,
-             "UDM_API_PASSWORD" = UDM_API_PASSWORD)
+  # If password is not specified, prompt the user to enter it:
+  if (is.null(UDM_API_PASSWORD)) {
+    UDM_API_PASSWORD <- askpass::askpass("Please enter your UDM API password")
+  } else if (is.character(UDM_API_PASSWORD)) {
+    Sys.setenv("UDM_API_PASSWORD" = UDM_API_PASSWORD)
+  } else {
+    cli::cli_abort(c("{.arg UDM_API_PASSWORD} must be a character vector.",
+                     "x" = "You've supplied a {.cls {class(UDM_API_USERNAME)}} vector."))
+  }
 
 }
 
@@ -60,15 +70,14 @@ get_udm_username <- function() {
   # Retrieve username from environmental variables if already set
   username <- Sys.getenv("UDM_API_USERNAME")
 
-  if (!identical(username, "")) {
-    return(username)
-  }
-
   if (identical(Sys.getenv("TESTTHAT"), "true")) {
     return(httr2::secret_decrypt("rZDs3tqcTToVAuIVmJwHj-G7dFk8u2odlrmYpF0Uh1r-oc2_zQY",
                                  "UDMPULLR_KEY"))
+  } else if (!identical(username, "")) {
+    return(username)
   } else {
-    stop("No UDM API username found, please supply with `UDM_username` argument or with UDM_API_USERNAME environmental variable.")
+    cli::cli_abort(c("Can't find UDM API username.",
+                     "i" = "Please supply with {.arg UDM_username} argument, set using the {.fun set_udm_credentials} function, or define a {.var UDM_API_USERNAME} environmental variable."))
   }
 
 }
@@ -79,15 +88,14 @@ get_udm_password <- function() {
   # Retrieve password from environmental variables if already set
   password <- Sys.getenv("UDM_API_PASSWORD")
 
-  if (!identical(password, "")) {
-    return(password)
-  }
-
   if (identical(Sys.getenv("TESTTHAT"), "true")) {
     return(httr2::secret_decrypt("1oLFr_3eTNUd4-G_w8QrIX7WK-mKyD4q--KIyyO3",
                                  "UDMPULLR_KEY"))
+  } else if (!identical(password, "")) {
+    return(password)
   } else {
-    stop("No UDM API password found, please supply with `UDM_password` argument or with UDM_API_PASSWORD environmental variable.")
+    cli::cli_abort(c("Can't find UDM API username.",
+                     "i" = "Please supply with {.arg UDM_password} argument, set using the {.fun set_udm_credentials} function, or define a {.var UDM_API_PASSWORD} environmental variable."))
   }
 
 }

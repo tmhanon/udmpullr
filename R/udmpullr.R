@@ -25,6 +25,11 @@ udmpullr <- function(table_name,
                      UDM_username = get_udm_username(),
                      UDM_password = get_udm_password()) {
 
+  if (missing(table_name)) {
+    cli::cli_abort(c("{.arg table_name} must be specified.",
+                     "i" = "Table names can be found in the full UDM directory by running {.fun udm_directory}."))
+  }
+
   basic_query <- paste0("https://data.commoditymarkets.com/", company_feed, "/", table_name, "?")
 
   # This section of if-else statements checks whether the filter arguments have values and constructs the URL query accordingly.
@@ -38,7 +43,7 @@ udmpullr <- function(table_name,
       # If a start date is given but the end date is null:
       if (!is.null(start_date) & is.null(end_date)) {
         reformat_start_date <- start_date %>%
-          lubridate::parse_date_time(orders = c("ymd", "mdy")) %>%
+          lubridate::parse_date_time(orders = c("ymd", "mdy", "dmy")) %>%
           format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
@@ -49,11 +54,11 @@ udmpullr <- function(table_name,
         # If both a start date and an end date are given:
       } else if (!is.null(start_date) & !is.null(end_date)) {
         reformat_start_date <- start_date %>%
-          lubridate::parse_date_time(orders = c("ymd", "mdy")) %>%
+          lubridate::parse_date_time(orders = c("ymd", "mdy", "dmy")) %>%
           format("%Y-%m-%dT%H:%M:%OSZ")
 
         reformat_end_date <- end_date %>%
-          lubridate::parse_date_time(orders = c("ymd", "mdy")) %>%
+          lubridate::parse_date_time(orders = c("ymd", "mdy", "dmy")) %>%
           format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
@@ -65,7 +70,7 @@ udmpullr <- function(table_name,
         # If an end date is given but the start date is null:
       } else if (is.null(start_date) & ! is.null(end_date)) {
         reformat_end_date <- end_date %>%
-          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          lubridate::parse_date_time(orders = c("ymd", "mdy", "dmy")) %>%
           format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
@@ -83,7 +88,7 @@ udmpullr <- function(table_name,
       # If a start date is given but the end date is null:
       if (!is.null(start_date) & is.null(end_date)) {
         reformat_start_date <- start_date %>%
-          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          lubridate::parse_date_time(orders = c("ymd", "mdy", "dmy")) %>%
           format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
@@ -93,11 +98,11 @@ udmpullr <- function(table_name,
         # If both a start date and an end date are given:
       } else if (!is.null(start_date) & !is.null(end_date)) {
         reformat_start_date <- start_date %>%
-          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          lubridate::parse_date_time(orders = c("ymd", "mdy", "dmy")) %>%
           format("%Y-%m-%dT%H:%M:%OSZ")
 
         reformat_end_date <- end_date %>%
-          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          lubridate::parse_date_time(orders = c("ymd", "mdy", "dmy")) %>%
           format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
@@ -108,7 +113,7 @@ udmpullr <- function(table_name,
         # If an end date is given but the start date is null:
       } else {
         reformat_end_date <- end_date %>%
-          lubridate::parse_date_time(orders = c("ymd", "dmy")) %>%
+          lubridate::parse_date_time(orders = c("ymd", "mdy", "dmy")) %>%
           format("%Y-%m-%dT%H:%M:%OSZ")
 
         query <- paste0(basic_query,
