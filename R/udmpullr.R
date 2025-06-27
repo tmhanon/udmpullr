@@ -142,6 +142,12 @@ udmpullr <- function(table_name,
     purrr::map(~ purrr::modify_if(.x, is.null, ~ NA)) %>%
     dplyr::bind_rows()
 
+  if (nrow(data) == 10000) {
+    cli::cli_warn(c("Your data contains 10,000 rows.",
+                    "i" = "The UDM API returns a maximum of 10,000 rows of data. Your data may not contain all expected observations.",
+                    " " = "Try filtering data to fewer observations using {.arg start_date} and {.arg end_date} or {.arg product_name}, if applicable."))
+  }
+
   data
 
 }
